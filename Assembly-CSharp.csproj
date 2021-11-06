@@ -53,11 +53,12 @@
     <UnityVersion>2020.3.21f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\ViewportHandler.cs" />
-    <Compile Include="Assets\Scripts\Input Scripts\PlayerInput.cs" />
-    <Compile Include="Assets\Scripts\Obstacle Scripts\GenerateObstacle.cs" />
     <Compile Include="Assets\Scripts\Obstacle Scripts\GridManager.cs" />
     <Compile Include="Assets\Scripts\Ball Scripts\BallCollision.cs" />
+    <Compile Include="Assets\Scripts\ViewportHandler.cs" />
+    <Compile Include="Assets\Scripts\Input Scripts\PlayerInput.cs" />
+    <Compile Include="Assets\Scripts\Game Data\GameData.cs" />
+    <Compile Include="Assets\Scripts\Game Data\GameManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

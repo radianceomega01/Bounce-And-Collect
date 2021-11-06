@@ -96,7 +96,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4502427245552451183}
-  m_Text: X2
+  m_Text: X3
   m_OffsetZ: 0
   m_CharacterSize: 0.3
   m_LineSpacing: 1
@@ -121,5 +121,5 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.2, y: 0.43570313, z: 0.3}
+  m_Size: {x: 1.2, y: 0.01, z: 0.3}
   m_Center: {x: 0, y: 0, z: 0}

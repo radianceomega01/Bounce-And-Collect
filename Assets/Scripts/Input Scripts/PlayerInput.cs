@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerInput : MonoBehaviour
 {
@@ -11,11 +12,14 @@ public class PlayerInput : MonoBehaviour
     Animator anim;
     int ballCount;
     bool calledOnce;
+    public Image handImg;
+    public Text guideTxt;
     // Update is called once per frame
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
+        ballCount = GameData.BALL_COUNT;
     }
     void Update()
     {
@@ -26,6 +30,9 @@ public class PlayerInput : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow))
         {
+            GameData.BALL_COUNT = 0;
+            handImg.enabled = false;
+            guideTxt.enabled = false;
             anim.SetBool("Input", true);
             instantiatePos = new Vector2(transform.position.x + 0.7f, transform.position.y);
             if(Input.GetKey(KeyCode.RightArrow))
@@ -39,7 +46,7 @@ public class PlayerInput : MonoBehaviour
             }
                 
         }
-        if (ballCount >= 10)
+        if (ballCount == 0)
         {
             CancelInvoke("WaitForBall");
             anim.SetBool("Input", false);
@@ -50,6 +57,9 @@ public class PlayerInput : MonoBehaviour
     {
         if (Input.touchCount > 0)
         {
+            GameData.BALL_COUNT = 0;
+            handImg.enabled = false;
+            guideTxt.enabled = false;
             anim.SetBool("Input", true);
             touch = Input.GetTouch(0);
             instantiatePos = new Vector2(transform.position.x + 0.7f, transform.position.y);
@@ -61,7 +71,7 @@ public class PlayerInput : MonoBehaviour
 
             }
         }
-        if (ballCount >= 10)
+        if (ballCount == 0)
         {
             CancelInvoke("WaitForBall");
             anim.SetBool("Input", false);
@@ -70,6 +80,7 @@ public class PlayerInput : MonoBehaviour
     void WaitForBall()
     {
         Instantiate(balls, instantiatePos, transform.rotation);
-        ballCount++;
+        ballCount--;
+        Debug.Log(ballCount);
     }
 }

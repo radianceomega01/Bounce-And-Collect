@@ -85,7 +85,7 @@ public class GridManager : MonoBehaviour
                 InstantiateWithNum(rand, new Vector3(xStart + (xSpace * (i % columnLength)), yStart + (-ySpace * (i / columnLength)), 0));
                 rightObsIndex = i;
             }
-            Debug.Log(i+" "+rand);     
+            //Debug.Log(i+" "+rand);     
         }
     }
 

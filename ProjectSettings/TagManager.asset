@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Multiplier
   - Bucket
+  - Ball
   layers:
   - Default
   - TransparentFX

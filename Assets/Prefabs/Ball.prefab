@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 303827835056201889}
   - component: {fileID: 303827835056201918}
   - component: {fileID: -7632021586356947369}
+  - component: {fileID: -4655523700181089468}
   m_Layer: 3
   m_Name: Ball
-  m_TagString: Untagged
+  m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -220,3 +221,15 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &-4655523700181089468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303827835056201919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 561a7fafbb4d1c54f992bea5de34e370, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
