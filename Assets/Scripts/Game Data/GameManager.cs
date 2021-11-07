@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public Text requiredBalls;
     public Button resultButton;
     public Button nextButton;
+    public Text levelText;
     public Camera mainCamera;
     public GameObject bucketUp;
     public GameObject bucketDown;
@@ -19,13 +20,19 @@ public class GameManager : MonoBehaviour
     Animator bucketAnim;
     PlayerInput inpBucketUp;
     PlayerInput inpBucketDown;
+    GameObject obstacleParent;
+    Vector3 newCameraPos;
+    Vector3 newBucketPos;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         bucketAnim = bucketDown.GetComponent<Animator>();
-        inpBucketUp = bucketDown.GetComponent<PlayerInput>();
+        inpBucketUp = bucketUp.GetComponent<PlayerInput>();
         inpBucketDown = bucketDown.GetComponent<PlayerInput>();
+        obstacleParent = GameObject.Find("Obstacle Parent");
+        newCameraPos = new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y - 9f, mainCamera.transform.position.z);
+        newBucketPos = new Vector3(bucketDown.transform.position.x, bucketDown.transform.position.y - 1f, bucketDown.transform.position.z);
     }
 
     // Update is called once per frame
@@ -35,52 +42,71 @@ public class GameManager : MonoBehaviour
         {
             requiredBalls.text = GameData.RESULT_BALL_COUNT + "/" + "50";
         }
-        if (GameObject.FindGameObjectsWithTag("Ball").Length > 0)
+        if (GameObject.FindGameObjectsWithTag("Ball").Length > 2)
         {
             gameStarted = true;
         }
-        if (GameObject.FindGameObjectsWithTag("Ball").Length == 0 && gameStarted)
+        if (gameStarted && GameObject.FindGameObjectsWithTag("Ball").Length == 0)
         {
             GameData.IS_STAGE_TWO = true;
-            inpBucketUp.enabled = true;
-            inpBucketDown.enabled = false;
+            inpBucketUp.gameObject.SetActive(true);
+            requiredBalls.gameObject.SetActive(true);
+            inpBucketDown.enabled = true;
             bucketDown.tag = "Untagged";
-            if (!movedCameraAndBucket)
+
+            /*if (!movedCameraAndBucket)
             {
-                mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position,
-                new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y - 9f, mainCamera.transform.position.z), 1f);
-                bucketDown.transform.position = Vector3.Lerp(bucketDown.transform.position,
-                    new Vector3(bucketDown.transform.position.x, bucketDown.transform.position.y - 1f, bucketDown.transform.position.z), 0.5f);
-                requiredBalls.enabled = true;
+                StartCoroutine(WaitForTransition());
                 movedCameraAndBucket = true;
-            }
+            }*/
+            mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position,newCameraPos, 1.5f * Time.deltaTime);
+            bucketDown.transform.position = Vector3.Lerp(bucketDown.transform.position,newBucketPos, 1.5f * Time.deltaTime);
         }
 
-        if (bucketAnim.GetBool("Input") == false && GameData.RESULT_BALL_COUNT < 50)
+        if (GameData.RESULT_BALL_COUNT < 50 && GameData.IS_STAGE_TWO_STARTED && GameObject.FindGameObjectsWithTag("Ball").Length == 0)
         {
-            resultButton.enabled = true;
+            obstacleParent.active = false;
+            resultButton.image.color = Color.red;
+            resultButton.gameObject.active = true;
             resultButton.GetComponentInChildren<Text>().text = "Game Over!";
-            nextButton.enabled = true;
+            //nextButton.gameObject.active = true;
             nextButton.GetComponentInChildren<Text>().text = "Try Again";
             isWon = false;
         }
 
-        else if (bucketAnim.GetBool("Input") == false && GameData.RESULT_BALL_COUNT >= 50)
+        else if (GameData.RESULT_BALL_COUNT >= 50 && GameData.IS_STAGE_TWO_STARTED && GameObject.FindGameObjectsWithTag("Ball").Length == 0)
         {
-            resultButton.enabled = true;
+            obstacleParent.active = false;
+            resultButton.image.color = Color.green;
+            resultButton.gameObject.active = true;
             resultButton.GetComponentInChildren<Text>().text = "Well Done!";
-            nextButton.enabled = true;
+            //nextButton.gameObject.active = true;
             nextButton.GetComponentInChildren<Text>().text = "Next";
             isWon = true;
         }
     }
 
+    IEnumerator WaitForTransition()
+    {
+        yield return new WaitForSeconds(1f);
+        mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position,
+                new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y - 9f, mainCamera.transform.position.z), 10f *Time.deltaTime);
+        bucketDown.transform.position = Vector3.Lerp(bucketDown.transform.position,
+            new Vector3(bucketDown.transform.position.x, bucketDown.transform.position.y - 1f, bucketDown.transform.position.z), 5f * Time.deltaTime);
+    }
     public void RestartGame()
     {
-        if(!isWon)
-            GameData.LEVEL = 1;
+        if (!isWon)
+            GameData.LEVEL = 10;
         else
+        {
             GameData.LEVEL++;
+            levelText.text = "Level " + "GameData.LEVEL";
+        }
+        //GameData.BALL_COUNT = 0;
         SceneManager.LoadScene("GameplayScene");
+        resultButton.gameObject.SetActive(true);
+        resultButton.enabled = true;
+        obstacleParent.SetActive(true);
     }
 }

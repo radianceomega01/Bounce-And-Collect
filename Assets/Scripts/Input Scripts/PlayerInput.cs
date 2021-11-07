@@ -19,7 +19,10 @@ public class PlayerInput : MonoBehaviour
     private void Awake()
     {
         anim = GetComponent<Animator>();
-        ballCount = GameData.BALL_COUNT;
+        if (!GameData.IS_STAGE_TWO)
+            ballCount = 10;
+        else
+            ballCount = GameData.BALL_COUNT;
     }
     void Update()
     {
@@ -30,9 +33,8 @@ public class PlayerInput : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow))
         {
-            GameData.BALL_COUNT = 0;
-            handImg.enabled = false;
-            guideTxt.enabled = false;
+            handImg.gameObject.SetActive(false);
+            guideTxt.gameObject.SetActive(false);
             anim.SetBool("Input", true);
             instantiatePos = new Vector2(transform.position.x + 0.7f, transform.position.y);
             if(Input.GetKey(KeyCode.RightArrow))
@@ -57,7 +59,7 @@ public class PlayerInput : MonoBehaviour
     {
         if (Input.touchCount > 0)
         {
-            GameData.BALL_COUNT = 0;
+            //GameData.BALL_COUNT = 0;
             handImg.enabled = false;
             guideTxt.enabled = false;
             anim.SetBool("Input", true);
@@ -81,6 +83,8 @@ public class PlayerInput : MonoBehaviour
     {
         Instantiate(balls, instantiatePos, transform.rotation);
         ballCount--;
-        Debug.Log(ballCount);
+        if (GameData.IS_STAGE_TWO)
+            GameData.IS_STAGE_TWO_STARTED = true;
+        //Debug.Log(ballCount);
     }
 }

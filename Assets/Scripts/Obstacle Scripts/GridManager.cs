@@ -20,11 +20,14 @@ public class GridManager : MonoBehaviour
     int rightObsIndex;
     int straightObsIndex;
     int multObsIndex;
+    int numOfMultipliers;
+    GameObject obstacleParent;
 
     private void Awake()
     {
         columnLength = 4;
         rowLength = 4;
+        obstacleParent = GameObject.Find("Obstacle Parent");
     }
     // Start is called before the first frame update
     void Start()
@@ -50,12 +53,13 @@ public class GridManager : MonoBehaviour
             }
             else
                 rand = Random.Range(0, 4);
-            if (Random.Range(0f, 1f) >= 0.7)
+            if (Random.Range(0f, 1f) >= 0.85)
             {
                 if (rand == 1 || rand == 2)
                 {
                     InstantiateWithNum(4, new Vector3(xStart + (xSpace * (i % columnLength)) + 0.7f, yStart + (-ySpace * (i / columnLength)) - 0.5f, 0));
                     multObsIndex = i;
+                    numOfMultipliers++;
                 }
                 
             }
@@ -87,28 +91,43 @@ public class GridManager : MonoBehaviour
             }
             //Debug.Log(i+" "+rand);     
         }
+        if (numOfMultipliers == 0)
+        {
+            InstantiateWithNum(4, new Vector3(xStart + (xSpace * (13 % columnLength)) + 0.7f, yStart + (-ySpace * (13 / columnLength)) - 0.5f, 0));
+        }
     }
 
     void InstantiateWithNum(int num, Vector3 pos)
     {
+        GameObject instantiatedObj;
         if (num == 0)
         {
-            Instantiate(obstacleLeft, pos, Quaternion.identity);
+            instantiatedObj = Instantiate(obstacleLeft, pos, Quaternion.identity);
+            instantiatedObj.transform.parent = obstacleParent.transform;
         }
-        if (num == 1)
-            Instantiate(obstacleEmpty, pos, Quaternion.identity);
-        if (num == 2)
-            Instantiate(obstacleStraight, pos, Quaternion.identity);
-        if (num == 3)
+        else if (num == 1)
         {
-            Instantiate(obstacleRight, pos, Quaternion.identity);
+            instantiatedObj = Instantiate(obstacleEmpty, pos, Quaternion.identity);
+            instantiatedObj.transform.parent = obstacleParent.transform;
         }
-        if (num == 4)
+        else if (num == 2)
         {
-            Instantiate(ballMultiplier, pos, Quaternion.identity);
+            instantiatedObj = Instantiate(obstacleStraight, pos, Quaternion.identity);
+            instantiatedObj.transform.parent = obstacleParent.transform;
+        }
+        else if (num == 3)
+        {
+            instantiatedObj = Instantiate(obstacleRight, pos, Quaternion.identity);
+            instantiatedObj.transform.parent = obstacleParent.transform;
+        }
+        else if (num == 4)
+        {
+            instantiatedObj = Instantiate(ballMultiplier, pos, Quaternion.identity);
             int randNum = Random.Range(2, 5);
             ballMultiplier.GetComponent<TextMesh>().text = "X" + randNum;
+            instantiatedObj.transform.parent = obstacleParent.transform;
         }
+        
     }
 
 }
