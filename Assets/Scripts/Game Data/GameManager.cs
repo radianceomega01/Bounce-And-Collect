@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
     {
         if (requiredBalls.enabled == true)
         {
-            requiredBalls.text = GameData.RESULT_BALL_COUNT + "/" + "50";
+            requiredBalls.text = GameData.RESULT_BALL_COUNT + "/" + "40";
         }
         if (GameObject.FindGameObjectsWithTag("Ball").Length > 2)
         {
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
         if (gameStarted && GameObject.FindGameObjectsWithTag("Ball").Length == 0)
         {
             GameData.IS_STAGE_TWO = true;
-            inpBucketUp.gameObject.SetActive(true);
+            inpBucketUp.enabled = false;
             requiredBalls.gameObject.SetActive(true);
             inpBucketDown.enabled = true;
             bucketDown.tag = "Untagged";
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
             bucketDown.transform.position = Vector3.Lerp(bucketDown.transform.position,newBucketPos, 1.5f * Time.deltaTime);
         }
 
-        if (GameData.RESULT_BALL_COUNT < 50 && GameData.IS_STAGE_TWO_STARTED && GameObject.FindGameObjectsWithTag("Ball").Length == 0)
+        if (GameData.RESULT_BALL_COUNT < 40 && GameData.IS_STAGE_TWO_STARTED && GameObject.FindGameObjectsWithTag("Ball").Length == 0)
         {
             obstacleParent.active = false;
             resultButton.image.color = Color.red;
@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
             isWon = false;
         }
 
-        else if (GameData.RESULT_BALL_COUNT >= 50 && GameData.IS_STAGE_TWO_STARTED && GameObject.FindGameObjectsWithTag("Ball").Length == 0)
+        else if (GameData.RESULT_BALL_COUNT >= 40 && GameData.IS_STAGE_TWO_STARTED && GameObject.FindGameObjectsWithTag("Ball").Length == 0)
         {
             obstacleParent.active = false;
             resultButton.image.color = Color.green;
@@ -97,16 +97,22 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         if (!isWon)
-            GameData.LEVEL = 10;
+            GameData.LEVEL = 0;
         else
         {
             GameData.LEVEL++;
             levelText.text = "Level " + "GameData.LEVEL";
         }
         //GameData.BALL_COUNT = 0;
-        SceneManager.LoadScene("GameplayScene");
-        resultButton.gameObject.SetActive(true);
-        resultButton.enabled = true;
+        resultButton.gameObject.SetActive(false);
+        resultButton.enabled = false;
+        GameData.BALL_COUNT = 0;
+        GameData.RESULT_BALL_COUNT = 0;
+        GameData.IS_STAGE_TWO = false;
+        GameData.IS_STAGE_TWO_STARTED = false;
+        GameData.IS_SET_BALL_COUNT = false;
+        GameData.IS_SET_BALL_COUNT_NEXT = false;
         obstacleParent.SetActive(true);
+        SceneManager.LoadScene("GameplayScene");
     }
 }

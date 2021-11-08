@@ -582,7 +582,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 717936238}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6255c9d115a0cbf469371f774bb64817, type: 3}
   m_Name: 
@@ -604,7 +604,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 124
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!95 &717936242
 Animator:
@@ -1442,7 +1442,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1307814009}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -9.5, z: 0}
+  m_LocalPosition: {x: 0, y: -10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1395474710}
@@ -2344,6 +2344,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1004942953}
     m_Modifications:
+    - target: {fileID: 999373662353843594, guid: 3375c6d9573b70a48bf20406a47f56b8, type: 3}
+      propertyPath: m_Text
+      value: 0/40
+      objectReference: {fileID: 0}
     - target: {fileID: 999373662353843595, guid: 3375c6d9573b70a48bf20406a47f56b8, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2414,7 +2418,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 999373662353843595, guid: 3375c6d9573b70a48bf20406a47f56b8, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 150
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 999373662353843595, guid: 3375c6d9573b70a48bf20406a47f56b8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

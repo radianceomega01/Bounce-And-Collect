@@ -6,7 +6,7 @@ public class BallCollision : MonoBehaviour
 {
     Vector3 instPos;
     Rigidbody ballBody;
-    bool collidedWithCounter;
+    bool ballwasActive;
 
     private void Awake()
     {
@@ -15,9 +15,13 @@ public class BallCollision : MonoBehaviour
 
     private void Update()
     {
-        if (ballBody.velocity.magnitude == 0f)
+        if (ballBody.velocity.magnitude > 0f)
         {
-            Destroy(gameObject, 7f);
+            ballwasActive = true;
+        }
+        if (ballBody.velocity.magnitude == 0f && ballwasActive)
+        {
+            Destroy(gameObject, 5f);
         }
     }
     private void OnCollisionEnter(Collision collision)
@@ -26,6 +30,10 @@ public class BallCollision : MonoBehaviour
         {
             GameData.BALL_COUNT++;
             Destroy(gameObject,0.2f);
+        }
+       else if (collision.gameObject.name == "Bottom Blocker")
+        {
+            Destroy(gameObject,5f);
         }
 
     }
@@ -57,7 +65,6 @@ public class BallCollision : MonoBehaviour
         else if (other.gameObject.name == "Balls Counter")
         {
             GameData.RESULT_BALL_COUNT++;
-            collidedWithCounter = true;
         }
     }
 

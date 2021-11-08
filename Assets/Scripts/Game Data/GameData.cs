@@ -7,4 +7,6 @@ public static class GameData
     public static bool GAME_OVER = false;
     public static bool IS_STAGE_TWO = false;
     public static bool IS_STAGE_TWO_STARTED = false;
+    public static bool IS_SET_BALL_COUNT;
+    public static bool IS_SET_BALL_COUNT_NEXT;
 }

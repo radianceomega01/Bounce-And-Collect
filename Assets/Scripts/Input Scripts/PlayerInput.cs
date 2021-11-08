@@ -19,14 +19,25 @@ public class PlayerInput : MonoBehaviour
     private void Awake()
     {
         anim = GetComponent<Animator>();
-        if (!GameData.IS_STAGE_TWO)
+        if (GameData.BALL_COUNT == 0)
+        {
             ballCount = 10;
-        else
-            ballCount = GameData.BALL_COUNT;
+        }
     }
     void Update()
     {
-        DesktopTouchInput();        
+        DesktopTouchInput();
+        if (GameData.BALL_COUNT==0 && !GameData.IS_SET_BALL_COUNT)
+        {
+            ballCount = 10;
+            GameData.IS_SET_BALL_COUNT = true;
+        }
+        if (GameData.IS_STAGE_TWO && !GameData.IS_SET_BALL_COUNT_NEXT)
+        {
+            
+            ballCount = GameData.BALL_COUNT;
+            GameData.IS_SET_BALL_COUNT_NEXT = true;
+        }
     }
 
     void DesktopTouchInput()
@@ -43,6 +54,7 @@ public class PlayerInput : MonoBehaviour
                 transform.position = new Vector2(transform.position.x - movementSpeed * Time.deltaTime, transform.position.y);
             if (!calledOnce)
             {
+                Debug.Log(calledOnce);
                 InvokeRepeating("WaitForBall", 0.5f, 0.3f);
                 calledOnce = true;
             }
@@ -85,6 +97,8 @@ public class PlayerInput : MonoBehaviour
         ballCount--;
         if (GameData.IS_STAGE_TWO)
             GameData.IS_STAGE_TWO_STARTED = true;
+        else
+            GameData.IS_STAGE_TWO_STARTED = false;
         //Debug.Log(ballCount);
     }
 }
